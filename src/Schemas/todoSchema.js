@@ -15,6 +15,8 @@ const todoSchema = mongoose.Schema({
     },
     date: {
         type: Date,
-        default:Date.UTC()
+        default:Date.now()
     }
 })
+
+export default todoSchema;
