@@ -21,9 +21,21 @@ router.post("/insert", async (req, res) => {
   }
 });
 
+router.put('/update/:id', async (req, res) => {
+    const {id }= req.params;
+    const result =await Todo.findOneAndUpdate({ _id: id }, { isGood: true });
+    await res.send(result);
+})
+
 router.get('/get', async (req, res) => {
     const data = await Todo.find({name:'rokib',roll:13,isGood:false});
     res.send(data);
+})
+
+router.get('/single', async (req, res) => {
+    const {name} = req.query;
+    const result = await Todo.find({ name: name })
+    res.send(result)
 })
 
 export default router;
