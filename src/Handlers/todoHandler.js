@@ -1,27 +1,29 @@
-import express from 'express';
-import mongoose from 'mongoose';
-import todoSchema from '../Schemas/todoSchema.js'
+import express from "express";
+import mongoose from "mongoose";
+import todoSchema from "../Schemas/todoSchema.js";
 
-const Todo = new mongoose.model('Todo', todoSchema);
+const Todo = new mongoose.model("Todo", todoSchema);
 const router = express.Router();
 
-router.post('/insert', async (req, res) => {
-    try {
-        const user = new Todo(req.body);
-    await user.save((err) => {
-        if (err) {
-            res.status(500).send(err.message)
-        }
-        else {
-            res.status(200).send('data stored successfully')
-        }
-    })
+router.post("/insert", async (req, res) => {
+  try {
+    const user = new Todo(req.body);
+    const result = await user.save((err) => {
+      if (err) {
+        res.status(500).send(err.message);
+      } else {
+        res.send("data stored successfully");
+      }
+    });
     // await res.send(user)
-    } catch (error) {
-        console.log(error.message);
-    }
+  } catch (error) {
+    console.log(error.message);
+  }
+});
+
+router.get('/get', async (req, res) => {
+    const data = await Todo.find({name:'rokib',roll:13,isGood:false});
+    res.send(data);
 })
-
-
 
 export default router;
