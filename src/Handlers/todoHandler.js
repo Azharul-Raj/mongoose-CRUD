@@ -38,4 +38,10 @@ router.get('/single', async (req, res) => {
     res.send(result)
 })
 
+router.delete('/delete/:id', async (req, res) => {
+    const { id } = req.params;
+    const result = await Todo.deleteOne({ _id: id });
+    res.send(result);
+})
+
 export default router;
