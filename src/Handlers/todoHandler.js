@@ -6,16 +6,17 @@ const Todo = new mongoose.model("Todo", todoSchema);
 const router = express.Router();
 
 router.post("/insert", async (req, res) => {
+  const { name } = req.body;
   try {
-    const user = new Todo(req.body);
-    const result = await user.save((err) => {
-      if (err) {
-        res.status(500).send(err.message);
-      } else {
-        res.send("data stored successfully");
-      }
-    });
-    // await res.send(user)
+    const isExist = await Todo.find({ name: name })
+    if (isExist) {
+      res.send('This name is already exist')
+    }
+    else {
+      const user = new Todo(req.body);
+    const result = await user.save();
+    res.send('data stored successfully')
+    }
   } catch (error) {
     console.log(error.message);
   }
@@ -28,7 +29,7 @@ router.put('/update/:id', async (req, res) => {
 })
 
 router.get('/get', async (req, res) => {
-    const data = await Todo.find({name:'rokib',roll:13,isGood:false});
+    const data = await Todo.find().select({_id:0,__v:0,date:0});
     res.send(data);
 })
 

@@ -1,11 +1,9 @@
 import express from 'express';
 import mongoose from 'mongoose';
-import cors from 'cors';
 import todoHandler from './src/Handlers/todoHandler.js'
 
 
 const app = express();
-app.use(cors());
 app.use(express.json());
 
 const port = process.env.PORT || 3001;
